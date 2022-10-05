@@ -12,7 +12,7 @@ import br.unifor.blockchain.Transaction;
 
 public class StringUtil {
 	
-	public static Integer difficulty = 5;
+	public static int difficulty = 3;
 	
 	//Applies ECDSA Signature and returns the result ( as bytes ).
 	public static byte[] applyECDSASig(PrivateKey privateKey, String input) {
@@ -66,6 +66,7 @@ public class StringUtil {
 		}
 	}	
 
+	//Tacks in array of transactions and returns a merkle root.
 	public static String getMerkleRoot(ArrayList<Transaction> transactions) {
 		int count = transactions.size();
 		ArrayList<String> previousTreeLayer = new ArrayList<String>();
@@ -84,10 +85,9 @@ public class StringUtil {
 		String merkleRoot = (treeLayer.size() == 1) ? treeLayer.get(0) : "";
 		return merkleRoot;
 	}
-	
-	public static String getDifficultyString() {
-		return StringUtil.difficulty.toString();
-	}
 
+	public static String getDificultyString(int difficulty) {
+		return new String(new char[difficulty]).replace('\0', '0');
+	}
 	
 }
