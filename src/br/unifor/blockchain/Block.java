@@ -10,8 +10,8 @@ public class Block {
 	public String hash;
 	public String previousHash; 
 	public String merkleRoot;
-	public ArrayList<Transaction> transactions = new ArrayList<Transaction>(); //our data will be a simple message.
-	public long timeStamp; //as number of milliseconds since 1/1/1970.
+	public ArrayList<Transaction> transactions = new ArrayList<Transaction>(); //Adição da transactions
+	public long timeStamp;
 	public int nonce;
 	
 	//Block Constructor.  
@@ -19,10 +19,10 @@ public class Block {
 		this.previousHash = previousHash;
 		this.timeStamp = new Date().getTime();
 		
-		this.hash = calculateHash(); //Making sure we do this after we set the other values.
+		this.hash = calculateHash(); //Certificando-se de fazer isso depois de definir os outros valores.
 	}
 	
-	//Calculate new hash based on blocks contents
+	//Calcular novo hash com base no conteúdo dos blocos
 	public String calculateHash() {
 		String calculatedhash = StringUtil.applySha256( 
 				previousHash +
@@ -44,9 +44,9 @@ public class Block {
 		System.out.println("Block Mined!!! : " + hash);
 	}
 	
-	//Add transactions to this block
+	//Add transactions para os blocos
 	public boolean addTransaction(Transaction transaction) {
-		//process transaction and check if valid, unless block is genesis block then ignore.
+		//processe a transação e verifique se é válida, a menos que o bloco seja o bloco de gênese, ignore.
 		if(transaction == null) return false;		
 		if((previousHash != "0")) {
 			if((transaction.processTransaction() != true)) {

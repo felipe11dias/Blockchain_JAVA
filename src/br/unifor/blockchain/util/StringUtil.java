@@ -14,7 +14,11 @@ public class StringUtil {
 	
 	public static int difficulty = 3;
 	
-	//Applies ECDSA Signature and returns the result ( as bytes ).
+	//	Applies ECDSA Signature and returns the result ( as bytes ).
+	//	The Signature class is used to provide applications the functionality
+	//	of a digital signature algorithm. Digital signatures are used for
+	//	authentication and integrity assurance of digital data.
+	//	Params: Elliptic Curve with Digital Signature Algorithm (ECDSA) implementation on BouncyCastle(BC)
 	public static byte[] applyECDSASig(PrivateKey privateKey, String input) {
 		Signature dsa;
 		byte[] output = new byte[0];

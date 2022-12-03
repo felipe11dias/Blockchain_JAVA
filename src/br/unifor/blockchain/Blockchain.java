@@ -11,13 +11,15 @@ public class Blockchain {
 	public static float minimumTransaction = 0.1f;
 	public static Wallet walletA;
 	public static Wallet walletB;
+	public static Wallet walletC;
 	public static Transaction genesisTransaction;
 	
 	public void setUpOrReset() {
   		
 		//Create wallets:
 		walletA = new Wallet();
-		walletB = new Wallet();		
+		walletB = new Wallet();
+		walletC = new Wallet();	
 		Wallet coinbase = new Wallet();
 		
 		//create genesis transaction, which sends 100 NoobCoin to walletA: 
@@ -54,9 +56,29 @@ public class Blockchain {
 		System.out.println("\nWalletA's balance is: " + walletA.getBalance());
 		System.out.println("WalletB's balance is: " + walletB.getBalance());
 
+//		Block block1 = new Block(genesis.hash);
+//		System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+//		System.out.println("\nWalletA is Attempting to send funds (40) to WalletB...");
+//		block1.addTransaction(walletA.sendFunds(walletB.publicKey, 40f));
+//		addBlock(block1);
+//		System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+//		System.out.println("WalletB's balance is: " + walletB.getBalance());
+//		
+//		Block block2 = new Block(block1.hash);
+//		block2.addTransaction(walletA.sendFunds(walletB.publicKey, 10f));
+//		addBlock(block2);
+//		System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+//		System.out.println("WalletB's balance is: " + walletB.getBalance());
+//		
+//		Block block3 = new Block(block2.hash);
+//		System.out.println("\nWalletB is Attempting to send funds (30) to WalletA...");
+//		block3.addTransaction(walletB.sendFunds( walletA.publicKey, 30));
+//		System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+//		System.out.println("WalletB's balance is: " + walletB.getBalance());
+
 	}
 	
-	public static Boolean isChainValid() {
+	public Boolean isChainValid() {
 		Block currentBlock; 
 		Block previousBlock;
 		String hashTarget = new String(new char[difficulty]).replace('\0', '0');
@@ -68,23 +90,26 @@ public class Blockchain {
 			
 			currentBlock = blockchain.get(i);
 			previousBlock = blockchain.get(i-1);
+			
 			//compare registered hash and calculated hash:
 			if(!currentBlock.hash.equals(currentBlock.calculateHash()) ){
 				System.out.println("#Current Hashes not equal");
 				return false;
 			}
+			
 			//compare previous hash and registered previous hash
 			if(!previousBlock.hash.equals(currentBlock.previousHash) ) {
 				System.out.println("#Previous Hashes not equal");
 				return false;
 			}
+			
 			//check if hash is solved
 			if(!currentBlock.hash.substring( 0, difficulty).equals(hashTarget)) {
 				System.out.println("#This block hasn't been mined");
 				return false;
 			}
 			
-			//loop thru blockchains transactions:
+			//loop blockchains transactions:
 			TransactionOutput tempOutput;
 			for(int t=0; t <currentBlock.transactions.size(); t++) {
 				Transaction currentTransaction = currentBlock.transactions.get(t);
